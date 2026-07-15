@@ -41,7 +41,7 @@ jobs:
       # Skip musl for 3.8 and 3.9 since no upstream wheels
       CIBW_SKIP: "pp* *-win32 *musllinux_aarch64*"
       CIBW_TEST_REQUIRES: pytest pytest-xdist pytest-randomly threadpoolctl pytest-run-parallel
-      CIBW_TEST_COMMAND: python -c "import numpy; numpy.show_runtime(); import statsmodels; statsmodels.test(['-m','(not slow and not example)','-n','2'], exit=True)"
+      CIBW_TEST_COMMAND: python -c "import numpy; numpy.show_runtime(); import statsmodels; statsmodels.test(['-m','(not slow and not example)','-n','2','--randomly-dont-reset-seed'], exit=True)"
       # Avoid testing on emulated architectures and Pyodide
       # Skip testing for now on Windows ARM11 due to linalg segfaults upstream
       CIBW_TEST_SKIP: "*-*linux_{aarch64,ppc64le,s390x} *pyodide* *-win_arm64"
@@ -87,7 +87,7 @@ jobs:
           CIBW_PLATFORM: pyodide
           CIBW_BUILD: "cp313-*"
           CIBW_TEST_COMMAND: python -c "import statsmodels; statsmodels.test(['-sra', '--skip-examples', '--skip-slow', '--randomly-dont-reset-seed'], exit=True)"
-          CIBW_TEST_REQUIRES: pytest pytest-cov pytest-run-parallel matplotlib
+          CIBW_TEST_REQUIRES: pytest pytest-cov pytest-run-parallel pytest-randomly matplotlib
 
       - name: Setup Upload Variables
         if: ${{ always() }}
