@@ -86,7 +86,7 @@ jobs:
           CIBW_BEFORE_BUILD: 'git submodule foreach git checkout  ${{ env.BUILD_COMMIT }}'
           CIBW_PLATFORM: pyodide
           CIBW_BUILD: "cp313-*"
-          CIBW_TEST_COMMAND: python -c "import statsmodels; statsmodels.test(['-sra', '--skip-examples', '--skip-slow'], exit=True)"
+          CIBW_TEST_COMMAND: python -c "import statsmodels; statsmodels.test(['-sra', '--skip-examples', '--skip-slow', '--randomly-dont-reset-seed'], exit=True)"
           CIBW_TEST_REQUIRES: pytest pytest-cov pytest-run-parallel matplotlib
 
       - name: Setup Upload Variables
