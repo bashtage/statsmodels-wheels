@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel, windows-11-arm]
-        python: [cp310, cp311, cp312, cp313, cp314]
+        python: [cp310, cp311, cp312, cp313, cp314, cp314t]
         python_impl: [Python]
         include:
           - python: cp313
@@ -37,9 +37,9 @@ jobs:
       CIBW_BUILD: ${{ matrix.python }}-*
       CIBW_ARCHS_LINUX: "x86_64 aarch64"
       CIBW_ARCHS_MACOS: native
-      # No support for pypy, musl, Win32 for 3.10+
+      # No support for musl or Win32 for 3.10+
       # Skip musl for 3.8 and 3.9 since no upstream wheels
-      CIBW_SKIP: "pp* *-win32 *musllinux_aarch64*"
+      CIBW_SKIP: "*-win32 *musllinux_aarch64*"
       CIBW_TEST_REQUIRES: pytest pytest-xdist pytest-randomly threadpoolctl pytest-run-parallel
       CIBW_TEST_COMMAND: python -c "import numpy; numpy.show_runtime(); import statsmodels; statsmodels.test(['-m','(not slow and not example)','-n','2','--randomly-dont-reset-seed'], exit=True)"
       # Avoid testing on emulated architectures and Pyodide
@@ -83,11 +83,12 @@ jobs:
           output-dir: wheelhouse
           package-dir: statsmodels
         env:
-          CIBW_BEFORE_BUILD: 'git submodule foreach git checkout  ${{ env.BUILD_COMMIT }}'
           CIBW_PLATFORM: pyodide
           CIBW_BUILD: "cp313-*"
+          CIBW_BEFORE_BUILD: 'git submodule foreach git checkout  ${{ env.BUILD_COMMIT }}'
           CIBW_TEST_COMMAND: python -c "import statsmodels; statsmodels.test(['-sra', '--skip-examples', '--skip-slow', '--randomly-dont-reset-seed'], exit=True)"
           CIBW_TEST_REQUIRES: pytest pytest-cov pytest-run-parallel pytest-randomly matplotlib
+
 
       - name: Setup Upload Variables
         if: ${{ always() }}
