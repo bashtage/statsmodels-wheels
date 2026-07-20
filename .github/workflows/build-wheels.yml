@@ -37,7 +37,7 @@ jobs:
       CIBW_BUILD: ${{ matrix.python }}-*
       CIBW_ARCHS_LINUX: "x86_64 aarch64"
       CIBW_ARCHS_MACOS: native
-      # No support for pypy, musl, Win32 for 3.10+
+      # No support for musl or Win32 for 3.10+
       # Skip musl for 3.8 and 3.9 since no upstream wheels
       CIBW_SKIP: "*-win32 *musllinux_aarch64*"
       CIBW_TEST_REQUIRES: pytest pytest-xdist pytest-randomly threadpoolctl pytest-run-parallel
