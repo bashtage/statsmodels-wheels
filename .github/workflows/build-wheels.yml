@@ -101,15 +101,9 @@ jobs:
             echo "Do not upload to Anaconda"
             echo "ANACONDA_UPLOAD=false" >> $GITHUB_ENV
           fi
-          if [ "schedule" == "${{ github.event_name }}" ] || [ "main" == "$BUILD_COMMIT" ]; then
-            echo "Set upload for scientific-python-nightly-wheels"  
-            echo "ANACONDA_ORG=scientific-python-nightly-wheels" >> $GITHUB_ENV
-            echo "TOKEN=$SCIENTIFIC_PYTHON_NIGHTLY_WHEELS" >> $GITHUB_ENV
-          else
-          echo "Set upload for multibuild-wheels-staging"
-            echo "ANACONDA_ORG=multibuild-wheels-staging" >> $GITHUB_ENV
-            echo "TOKEN=$MULTIBUILD_WHEELS_STAGING_ACCESS" >> $GITHUB_ENV
-          fi
+          echo "Set upload for scientific-python-nightly-wheels"q
+          echo "ANACONDA_ORG=scientific-python-nightly-wheels" >> $GITHUB_ENV
+          echo "TOKEN=$SCIENTIFIC_PYTHON_NIGHTLY_WHEELS" >> $GITHUB_ENV
 
       - name: Install conda
         uses: conda-incubator/setup-miniconda@v4
