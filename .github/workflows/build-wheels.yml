@@ -19,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest, macos-15-intel, windows-11-arm]
-        python: [cp310, cp311, cp312, cp313, cp314, cp314t]
+        python: [cp315, cp315t]
         python_impl: [Python]
         include:
           - python: cp313
@@ -33,7 +33,7 @@ jobs:
           - os: windows-11-arm
             python: cp312
     env:
-      BUILD_COMMIT: "v0.15.0"  # or a specific version, e.g., v0.13.1
+      BUILD_COMMIT: "main"  # or a specific version, e.g., v0.13.1
       CIBW_BUILD: ${{ matrix.python }}-*
       CIBW_ARCHS_LINUX: "x86_64 aarch64"
       CIBW_ARCHS_MACOS: native
