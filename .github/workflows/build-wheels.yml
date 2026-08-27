@@ -35,6 +35,7 @@ jobs:
     env:
       BUILD_COMMIT: "main"  # or a specific version, e.g., v0.13.1
       CIBW_BUILD: ${{ matrix.python }}-*
+      CIBW_ENABLE: cpython-prerelease
       CIBW_ARCHS_LINUX: "x86_64 aarch64"
       CIBW_ARCHS_MACOS: native
       # No support for musl or Win32 for 3.10+
